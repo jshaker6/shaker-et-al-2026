@@ -66,11 +66,11 @@ regionAcronyms = {'MRF', 'SCm', 'MOs', 'CP'};
 % --- Parameters ---
 params = struct();
 params.minFR_baseline    = 0.05;     % minimum baseline firing rate (Hz)
-params.RTlimits          = [0 1];    % reaction time filter, can be looser for analyzing activity in pre-stimulus window 
 params.baselinePeriod    = [-0.3 0.05]; % baseline window relative to stim onset, for calculating baseline firing rates
 params.inclRepeats       = true;     % include repeat trials (as in paper)
 
 % Part 1: Context decoding accuracy
+params.decoding.RTlimits    = [0 1]; % reaction time filter, can be looser for analyzing activity in pre-stimulus window 
 params.decoding.alpha       = 0.5;   % elastic net mixing (0=ridge, 1=lasso)
 params.decoding.numFolds    = 5;     % outer CV folds
 params.decoding.lambdaToUse = 'lambda_min';
@@ -123,7 +123,7 @@ RT = blockTL.moveTimes(:,1) - blockTL.stimulusOnTimes;
 
 % Part 1: broad inclusion - no repeats, RT filter, correct & incorrect trials
 inclTrials_decoding = (blockTL.repeatNumValues == 1) & (blockTL.responseValues ~= 0) & ...
-                      (RT >= params.RTlimits(1)) & (RT <= params.RTlimits(2));
+                      (RT >= params.decoding.RTlimits(1)) & (RT <= params.decoding.RTlimits(2));
 
 % Part 2: no repeats, RT filter, correct only
 inclTrials_traj = (blockTL.repeatNumValues == 1) & ...
