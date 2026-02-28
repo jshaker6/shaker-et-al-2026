@@ -67,7 +67,7 @@ regionAcronyms = {'MRF', 'SCm', 'MOs', 'CP'};
 params = struct();
 params.minFR_baseline    = 0.05;     % minimum baseline firing rate (Hz)
 params.RTlimits          = [0 1];    % reaction time filter, can be looser for analyzing activity in pre-stimulus window 
-params.baselinePeriod    = [-0.3 0]; % baseline window relative to stim onset
+params.baselinePeriod    = [-0.3 0.05]; % baseline window relative to stim onset, for calculating baseline firing rates
 params.inclRepeats       = true;     % include repeat trials (as in paper)
 
 % Part 1: Context decoding accuracy
@@ -76,7 +76,7 @@ params.decoding.numFolds    = 5;     % outer CV folds
 params.decoding.lambdaToUse = 'lambda_min';
 params.decoding.numDecodings = 10;   % iterations to average over (paper: 100)
 params.decoding.numShuff     = 100;  % pseudosession shuffles (paper: 2000)
-params.decoding.decodingInterval = [-0.3 -0.05]; % pre-stim baseline
+params.decoding.decodingInterval = [-0.3 -0.05]; % pre-stim window for context decoding
 params.decoding.minNeurons  = 3;     % minimum neurons per region
 
 % Part 2: Coding dimensions and trajectories
